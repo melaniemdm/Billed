@@ -3,6 +3,8 @@ import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import ErrorPage from "../views/ErrorPage.js";
 import LoadingPage from "../views/LoadingPage.js";
+import Bills from "../containers/Bills.js"
+
 
 jest.mock('../views/LoadingPage.js', () => {
   const originalModule = jest.requireActual('../views/LoadingPage.js');
@@ -23,6 +25,8 @@ jest.mock('../views/ErrorPage.js', () => {
     default: jest.fn(() => 'ErrorPage'),
       };
 });
+
+
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -55,3 +59,40 @@ describe("Given I am connected as an employee", () => {
     })
   })
 })
+
+describe("given i need to cover 80% of Bills statements", () => {
+  describe("when i create a Bills object", () => {
+    test("then it exists", () => {
+      const html = BillsUI({ data: bills})
+      document.body.innerHTML = html
+     let testBills = new Bills({ 
+       document: document, 
+       onNavigate: null,
+       firestore: null, 
+       localStorage: null })
+       let result = false;
+       if(testBills){
+      result = true;
+       }
+       expect(result).toBe(true)
+    })
+    test("then i can click on the eye", () => {
+      const html = BillsUI({ data: bills})
+      document.body.innerHTML = html
+     let testBills = new Bills({ 
+       document: document, 
+       onNavigate: null,
+       firestore: null, 
+       localStorage: null })
+     // let handleClickIconEye = jest.spyOn(testBills, "handleClickIconEye").mockImplementation(()=> "test click eye")
+    $.fn.modal = jest.fn()
+      let nodeEye = document.querySelector('#eye')
+     nodeEye.click() 
+  expect($.fn.modal).toHaveBeenCalled()
+   //  handleClickIconEye.mockRestore()
+    })
+
+  })
+  
+  
+  })
