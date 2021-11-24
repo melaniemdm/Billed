@@ -21,5 +21,8 @@ export const formatStatus = (status) => {
       return "Accepté"
     case "refused":
       return "Refused"
+    default: 
+      console.error("unknown status")
+      return "Unknown"
   }
 }
