@@ -84,14 +84,27 @@ describe("given i need to cover 80% of Bills statements", () => {
        onNavigate: null,
        firestore: null, 
        localStorage: null })
-     // let handleClickIconEye = jest.spyOn(testBills, "handleClickIconEye").mockImplementation(()=> "test click eye")
+     
     $.fn.modal = jest.fn()
       let nodeEye = document.querySelector('#eye')
      nodeEye.click() 
   expect($.fn.modal).toHaveBeenCalled()
-   //  handleClickIconEye.mockRestore()
+   
     })
-
+    test("then i can click on the New Bills", () => {
+      const html = BillsUI({ data: bills})
+      document.body.innerHTML = html
+     let testBills = new Bills({ 
+       document: document, 
+       onNavigate: null,
+       firestore: null, 
+       localStorage: null })
+       testBills.onNavigate = jest.fn()
+       const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
+       buttonNewBill.click() 
+  expect(testBills.onNavigate).toHaveBeenCalled()
+  
+    })
   })
   
   
