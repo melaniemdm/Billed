@@ -4,7 +4,7 @@ import { bills } from "../fixtures/bills.js"
 import ErrorPage from "../views/ErrorPage.js";
 import LoadingPage from "../views/LoadingPage.js";
 import Bills from "../containers/Bills.js"
-
+import firestore from "../app/Firestore.js"
 
 jest.mock('../views/LoadingPage.js', () => {
   const originalModule = jest.requireActual('../views/LoadingPage.js');
@@ -105,6 +105,24 @@ describe("given i need to cover 80% of Bills statements", () => {
   expect(testBills.onNavigate).toHaveBeenCalled()
   
     })
+    test("then i can get the bills", () => {
+      const html = BillsUI({ data: bills})
+      document.body.innerHTML = html
+  localStorage.__proto__.getItem=jest.fn((x) => '{"type":"Employee","email":"johndoe@email.com","password":"azerty","status":"connected"}')
+     let testBills = new Bills({ 
+       document: document, 
+       onNavigate: null,
+       firestore: null, 
+       localStorage:localStorage })
+       testBills.getBills()
+     expect(localStorage.getItem).toBeCalledWith("user")
+     localStorage.__proto__.getItem=jest.fn()
+     testBills.getBills()
+     expect(localStorage.getItem).toBeCalledWith("user")
+    
+      })
+
+      
   })
   
   
