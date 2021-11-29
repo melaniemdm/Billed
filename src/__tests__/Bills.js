@@ -60,8 +60,9 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
-describe("given i need to cover 80% of Bills statements", () => {
+describe("given i'm connected as employed'", () => {
   describe("when i create a Bills object", () => {
+    //On teste que la création d'une liste de bill fonctionne => création d'un objet de classe Bills
     test("then it exists", () => {
       const html = BillsUI({ data: bills})
       document.body.innerHTML = html
@@ -76,6 +77,7 @@ describe("given i need to cover 80% of Bills statements", () => {
        }
        expect(result).toBe(true)
     })
+    // on teste que lorsqu'un objet de classe Bills est créé, on peut cliquer sur l'oeil car il y a bien un évènement sur le noeud 'eye'
     test("then i can click on the eye", () => {
       const html = BillsUI({ data: bills})
       document.body.innerHTML = html
@@ -91,6 +93,7 @@ describe("given i need to cover 80% of Bills statements", () => {
   expect($.fn.modal).toHaveBeenCalled()
    
     })
+    // on teste que l'on peut cliquer sur le bouton de création d'une nouvelle bill car il y a bien un évènement sur le bouton
     test("then i can click on the New Bills", () => {
       const html = BillsUI({ data: bills})
       document.body.innerHTML = html
@@ -105,6 +108,7 @@ describe("given i need to cover 80% of Bills statements", () => {
   expect(testBills.onNavigate).toHaveBeenCalled()
   
     })
+    // on teste que l'on peut demander la liste des bills contenues dans l'objet de classe Bills en appelant la fonction getBills                                        
     test("then i can get the bills", () => {
       const html = BillsUI({ data: bills})
       document.body.innerHTML = html
