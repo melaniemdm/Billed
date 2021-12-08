@@ -68,19 +68,24 @@ describe("Given I am connected as an employee",  () => {
       //création du formualaire et ajout dans le DOM
       const html = NewBillUI()
       document.body.innerHTML = html
+      //creation d'un fichier fictif, de son nom et de son type
       let file = new File(['(⌐□_□)'], 'test-img.png', { type: 'image/png' });
+      //Permet de définir une nouvelle propriété ou de modifier une propriété existante
       Object.defineProperty(document.querySelector(`input[data-testid="file"]`), 'files', {
         value: [file],
         configurable: true
       })
-   
+     
+   //creation d'un nouveau fichier fictif, de son nom et de son type
        let newFile = new File(['(⌐□_□)'], 'test-img.jpg', { type: 'image/jpg' });
-
+//permet de simuler des event sur la page
       fireEvent.change(document.querySelector(`input[data-testid="file"]`), { 
             target: {
               files: [newFile]
             }})
-      let newBill = new NewBill({ document: document, onNavigate: null, firestore: firestore, localStorage:localStorage })
+       //creation de l'objet newBill
+       let newBill = new NewBill({ document: document, onNavigate: null, firestore: firestore, localStorage:localStorage })
+       //attendu la function doit generer une erreur a cause de firestore
       expect(newBill.handleChangeFile).toThrow(TypeError);     
 
     })
