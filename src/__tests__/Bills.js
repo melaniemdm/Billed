@@ -66,7 +66,7 @@ describe("given i'm connected as employed'", () => {
   describe("when i create a Bills object", () => {
     //On teste que la création d'une liste de bill fonctionne => création d'un objet de classe Bills
     test("then it exists", () => {
-      const html = BillsUI({ data: bills });
+      const html = "<body></body>"
       document.body.innerHTML = html;
       let testBills = new Bills({
         document: document,
