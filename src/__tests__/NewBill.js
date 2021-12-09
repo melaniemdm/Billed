@@ -2,6 +2,8 @@ import { fireEvent, screen } from "@testing-library/dom"
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 import firestore from "../app/Firestore.js"
+import firebase from "../__mocks__/firebase"
+import BillsUI from "../views/BillsUI.js";
 
 describe("Given I am connected as an employee",  () => {
   describe("When I am on NewBill Page", () => {
@@ -88,6 +90,36 @@ describe("Given I am connected as an employee",  () => {
        //attendu la function doit generer une erreur a cause de firestore
       expect(newBill.handleChangeFile).toThrow(TypeError);     
 
+    })
+  })
+})
+
+//test d'integration
+describe('Given I am connected as an employee', () => {
+  describe('When I submit a new bill', () => {
+    test('Then I send a POST on the mocked API ', async () => {
+      const getSpy = jest.spyOn(firebase, "post")
+      const newbill = await firebase.post()
+      expect(getSpy).toHaveBeenCalledTimes(1)
+      expect(newbill.message).toBe("bill posted")
+    })
+    test("fetches bills from an API and fails with 404 message error", async () => {
+      firebase.post.mockImplementationOnce(() =>
+        Promise.reject(new Error("Erreur 404"))
+      )
+      const html = BillsUI({ error: "Erreur 404" })
+      document.body.innerHTML = html
+      const message = await screen.getByText(/Erreur 404/)
+      expect(message).toBeTruthy()
+    })
+    test("fetches messages from an API and fails with 500 message error", async () => {
+      firebase.post.mockImplementationOnce(() =>
+        Promise.reject(new Error("Erreur 500"))
+      )
+      const html = BillsUI({ error: "Erreur 500" })
+      document.body.innerHTML = html
+      const message = await screen.getByText(/Erreur 500/)
+      expect(message).toBeTruthy()
     })
   })
 })
