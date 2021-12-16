@@ -26,7 +26,7 @@ describe("Given I am connected as an employee",  () => {
       Object.defineProperty(document.querySelector(`input[data-testid="file"]`), 'files', {
         value: [file]
       })
-            //création de l'objet NewBill après avoir chargé le fichier dans l'input
+     //création de l'objet NewBill après avoir chargé le fichier dans l'input
       let newBill = new NewBill({ document: document, onNavigate: null, firestore: firestore, localStorage:localStorage })
       //Insertion manuelle du fichier dans l'objet newBill
       newBill.fileName = document.querySelector(`input[data-testid="file"]`).files[0].name

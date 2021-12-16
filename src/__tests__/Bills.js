@@ -4,11 +4,11 @@ import { bills } from "../fixtures/bills.js";
 import ErrorPage from "../views/ErrorPage.js";
 import LoadingPage from "../views/LoadingPage.js";
 import Bills from "../containers/Bills.js";
-import firestore from "../app/Firestore.js";
+
 
 jest.mock("../views/LoadingPage.js", () => {
   const originalModule = jest.requireActual("../views/LoadingPage.js");
-  //Simule l'exportation par défaut et l'exportation nommée 'foo'
+  
   return {
     __esModule: true,
     ...originalModule,
@@ -18,7 +18,7 @@ jest.mock("../views/LoadingPage.js", () => {
 
 jest.mock("../views/ErrorPage.js", () => {
   const originalModule = jest.requireActual("../views/ErrorPage.js");
-  //Simule l'exportation par défaut et l'exportation nommée 'foo'
+  
   return {
     __esModule: true,
     ...originalModule,
@@ -46,14 +46,14 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted);
     });
     test("then the loadingPage appears when loading is true", () => {
-      const loadingPageResult = LoadingPage();
+     
       const html = BillsUI({ data: bills, loading: true });
       document.body.innerHTML = html;
 
       expect(LoadingPage).toHaveBeenCalled();
     });
     test("then the ErrorPage appears when loading is false", () => {
-      const errorPageResult = ErrorPage();
+     
       const html = BillsUI({ data: bills, loading: false, error: true });
       document.body.innerHTML = html;
 
@@ -87,7 +87,7 @@ describe("given i'm connected as employed'", () => {
         eyeIcon
       </div>
     </div>`;
-      let testBills = new Bills({
+     new Bills({
         document: document,
         onNavigate: null,
         firestore: null,
