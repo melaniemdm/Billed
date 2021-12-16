@@ -5,10 +5,9 @@ import ErrorPage from "../views/ErrorPage.js";
 import LoadingPage from "../views/LoadingPage.js";
 import Bills from "../containers/Bills.js";
 
-
 jest.mock("../views/LoadingPage.js", () => {
   const originalModule = jest.requireActual("../views/LoadingPage.js");
-  
+
   return {
     __esModule: true,
     ...originalModule,
@@ -18,7 +17,7 @@ jest.mock("../views/LoadingPage.js", () => {
 
 jest.mock("../views/ErrorPage.js", () => {
   const originalModule = jest.requireActual("../views/ErrorPage.js");
-  
+
   return {
     __esModule: true,
     ...originalModule,
@@ -29,9 +28,20 @@ jest.mock("../views/ErrorPage.js", () => {
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", () => {
-      const html = BillsUI({ data: [] });
+      localStorage.__proto__.getItem = jest.fn(
+        (x) =>
+          '{"type":"Employee","email":"johndoe@email.com","password":"azerty","status":"connected"}'
+      );
+      const html = BillsUI({ data: bills });
       document.body.innerHTML = html;
+      // code from Router.js
+      const divIcon1 = document.getElementById("layout-icon1");
+      const divIcon2 = document.getElementById("layout-icon2");
+      divIcon1.classList.add("active-icon");
+      divIcon2.classList.remove("active-icon");
       //to-do write expect expression
+     let nodeHtmlLayoutIcon1 = document.querySelector("#layout-icon1");
+      expect(nodeHtmlLayoutIcon1.className).toBe(`active-icon`);
     });
     test("Then bills should be ordered from earliest to latest", () => {
       const html = BillsUI({ data: bills });
@@ -46,14 +56,12 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted);
     });
     test("then the loadingPage appears when loading is true", () => {
-     
       const html = BillsUI({ data: bills, loading: true });
       document.body.innerHTML = html;
 
       expect(LoadingPage).toHaveBeenCalled();
     });
     test("then the ErrorPage appears when loading is false", () => {
-     
       const html = BillsUI({ data: bills, loading: false, error: true });
       document.body.innerHTML = html;
 
@@ -66,7 +74,7 @@ describe("given i'm connected as employed'", () => {
   describe("when i create a Bills object", () => {
     //On teste que la création d'une liste de bill fonctionne => création d'un objet de classe Bills
     test("then it exists", () => {
-      const html = "<body></body>"
+      const html = "<body></body>";
       document.body.innerHTML = html;
       let testBills = new Bills({
         document: document,
@@ -87,7 +95,7 @@ describe("given i'm connected as employed'", () => {
         eyeIcon
       </div>
     </div>`;
-     new Bills({
+      new Bills({
         document: document,
         onNavigate: null,
         firestore: null,
@@ -135,8 +143,8 @@ describe("given i'm connected as employed'", () => {
       localStorage.__proto__.getItem = jest.fn();
       testBills.getBills();
       expect(localStorage.getItem).toBeCalledWith("user");
-      let billRows = document.querySelectorAll("#eye") 
-     expect(billRows.length).toBe(4)
+      let billRows = document.querySelectorAll("#eye");
+      expect(billRows.length).toBe(4);
     });
   });
 });
