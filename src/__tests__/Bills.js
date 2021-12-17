@@ -141,9 +141,8 @@ describe("given i'm connected as employed'", () => {
       testBills.getBills();
       expect(localStorage.getItem).toBeCalledWith("user");
       localStorage.__proto__.getItem = jest.fn();
-      testBills.getBills();
-      expect(localStorage.getItem).toBeCalledWith("user");
-      let billRows = document.querySelectorAll("#eye");
+     let billRows = document.querySelectorAll("#eye");
+     //4 corrrespond au 4bills de fixtures
       expect(billRows.length).toBe(4);
     });
   });
